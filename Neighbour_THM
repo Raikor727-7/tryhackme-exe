@@ -1,0 +1,8 @@
+# EXECUÇÃO DO ROOM "Neighbour"
+
+## O Inicio
+
+a room inicia com apenas 1 task, que é iniciar a maquina e a attack box, depois de feito você apenas precisa logar no sistema no ip que lhe é entregue
+como nao sei login nem senha, entro como guest.
+para entrar como guest, preciso verificar o codigo fonte do site, e depois de analisar o codigo, entro como guest, e verifico uma falha no sistema de url onde me permite acessar o painel de admin
+assim finalizando a room inteira 
