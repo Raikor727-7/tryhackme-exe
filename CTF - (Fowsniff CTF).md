@@ -22,9 +22,9 @@ Iniciamos com um scan completo usando Nmap, buscando máxima verbosidade e detec
 Consultando o repositório público do projeto, encontramos um arquivo .txt contendo e-mails corporativos + hashes MD5 das senhas.
 
 Credencial-alvo (pedido pelo desafio)
-Email: `seina@fowsniff`
+Email: `seina@fowsniff`  
 
-Hash: `90dc16d47114aa13671c697fd506cf26`
+Hash: `90dc16d47114aa13671c697fd506cf26`  
 
 Após quebrar o hash:
 
@@ -38,21 +38,20 @@ nc <IP> 110
 USER seina
 PASS scoobydoo2
 LIST
-
 ```
 
 ### Emails encontrados
 Email 1: contém a senha
+`S1ck3nBluff+secureshell` 
 
-`S1ck3nBluff+secureshell`
 Email 2: contém o usuário
-
 `baksteen`
 
 ## 4. Acesso via SSH
 Com usuário e senha em mãos:
 
 `ssh baksteen@<IP>`
+`<digite a senha>`
 
 **Login realizado com sucesso.**
 
@@ -104,7 +103,7 @@ O script é executado automaticamente → reverse shell como root
 **Flag obtida com sucesso**
 
 
-### Mitigações (Blue Team)
+## Mitigações (Blue Team)
 - Nunca armazenar hashes/senhas em repositórios públicos
 
 - Evitar execução automática de scripts com permissões elevadas
