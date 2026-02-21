@@ -8,7 +8,8 @@ apenas introdução sem necessidade de respostas
 
 ### 2.1
 o primeiro ele pede para ver quantas portas estão abertas na maquina:
-> nmap -A 10.66.128.173
+`nmap -A 10.66.128.173`  
+
 > resposta: 2
 
 ### 2.2
